@@ -212,7 +212,8 @@
 
 /* Preview Section */
 .upload-preview {
-  sticky: top 100px;
+  position: sticky;
+  top: 100px;
 }
 
 .preview-card {
