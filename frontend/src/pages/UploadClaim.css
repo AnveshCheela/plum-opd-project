@@ -1,0 +1,11 @@
+.upload-claim-page {
+  flex: 1;
+  padding: 40px 20px;
+  background: linear-gradient(135deg, #f8f9fc 0%, #f3f4f8 100%);
+}
+
+@media (max-width: 768px) {
+  .upload-claim-page {
+    padding: 20px;
+  }
+}

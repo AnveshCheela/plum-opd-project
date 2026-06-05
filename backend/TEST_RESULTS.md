@@ -1,0 +1,23 @@
+# Test Results
+
+## OCR + Gemini
+PASS
+
+## MongoDB Save
+PASS
+
+## Claim History API
+PASS
+
+## Rule Engine
+
+TC001 PASS
+TC002 PASS
+TC003 PASS
+TC004 PASS
+TC005 PASS
+TC006 PASS
+TC007 PASS
+TC008 PASS
+TC009 PASS
+TC010 PASS

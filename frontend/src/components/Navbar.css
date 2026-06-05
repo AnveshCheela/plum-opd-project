@@ -1,0 +1,164 @@
+.navbar {
+  background: linear-gradient(135deg, #6366f1 0%, #ec4899 100%);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  padding: 0;
+}
+
+.navbar-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 16px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 24px;
+  color: white;
+  transition: transform 0.2s ease;
+}
+
+.navbar-brand:hover {
+  transform: scale(1.05);
+}
+
+.brand-icon {
+  font-size: 28px;
+}
+
+.brand-text {
+  background: linear-gradient(135deg, #ffffff 0%, #f0f4ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: 0.5px;
+}
+
+.navbar-links {
+  display: flex;
+  gap: 32px;
+  align-items: center;
+}
+
+.nav-link {
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 500;
+  text-decoration: none;
+  font-size: 15px;
+  transition: all 0.3s ease;
+  position: relative;
+  padding: 8px 0;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: white;
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover {
+  color: white;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+.nav-link-active {
+  color: white;
+}
+
+.nav-link-active::after {
+  width: 100%;
+}
+
+.role-toggle {
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.3s ease;
+  margin-left: 20px;
+}
+
+.role-toggle:hover {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.6);
+  transform: translateY(-2px);
+}
+
+.role-icon {
+  font-size: 16px;
+  line-height: 1;
+}
+
+.role-text {
+  display: inline;
+}
+
+.admin-mode {
+  background: rgba(16, 110, 190, 0.3);
+  border-color: rgba(16, 110, 190, 0.6);
+}
+
+.admin-mode:hover {
+  background: rgba(16, 110, 190, 0.4);
+}
+
+.user-mode {
+  background: rgba(15, 252, 190, 0.3);
+  border-color: rgba(15, 252, 190, 0.6);
+}
+
+.user-mode:hover {
+  background: rgba(15, 252, 190, 0.4);
+}
+
+@media (max-width: 768px) {
+  .navbar-container {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .navbar-links {
+    gap: 16px;
+    font-size: 13px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .role-toggle {
+    margin-left: 0;
+    font-size: 12px;
+    padding: 6px 12px;
+  }
+
+  .role-text {
+    display: none;
+  }
+
+  .navbar-brand {
+    font-size: 20px;
+  }
+}

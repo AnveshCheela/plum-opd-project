@@ -1,0 +1,425 @@
+.policy-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f8f9fc 0%, #f3f4f8 100%);
+  padding-bottom: 40px;
+}
+
+.policy-header {
+  background: linear-gradient(135deg, #6366f1 0%, #ec4899 100%);
+  color: white;
+  padding: 60px 20px;
+  text-align: center;
+  animation: fadeIn 0.5s ease-out;
+}
+
+.policy-header h1 {
+  font-size: 36px;
+  margin: 0 0 10px 0;
+  font-weight: 700;
+  color: white;
+  background: none;
+  -webkit-text-fill-color: white;
+}
+
+.policy-header p {
+  font-size: 16px;
+  margin: 0;
+  opacity: 0.95;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.policy-wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.policy-section {
+  background: white;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s ease;
+  border: 1px solid var(--border);
+}
+
+.policy-section:hover {
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.policy-section h2 {
+  font-size: 24px;
+  color: var(--text-dark);
+  margin: 0 0 20px 0;
+  font-weight: 600;
+}
+
+.policy-section h3 {
+  font-size: 16px;
+  color: var(--text-dark);
+  margin: 20px 0 12px 0;
+  font-weight: 600;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+}
+
+.section-header h2 {
+  margin-bottom: 0;
+  flex: 1;
+}
+
+.expand-icon {
+  font-size: 14px;
+  color: var(--text-light);
+  transition: transform 0.3s ease;
+  flex-shrink: 0;
+  margin-left: 10px;
+}
+
+.expand-icon.open {
+  transform: rotate(180deg);
+}
+
+.section-content {
+  animation: slideInDown 0.3s ease-out;
+  border-top: 2px solid var(--border);
+  padding-top: 20px;
+  margin-top: 10px;
+}
+
+/* Overview Grid */
+.overview-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 15px;
+}
+
+.overview-card {
+  background: linear-gradient(135deg, #f9fafb 0%, #ede9fe 100%);
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  border: 1px solid var(--border);
+  transition: all 0.3s ease;
+}
+
+.overview-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(99, 102, 241, 0.15);
+  border-color: var(--primary-light);
+}
+
+.card-icon {
+  font-size: 32px;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.overview-card h3 {
+  margin: 0 0 8px 0;
+  font-size: 13px;
+  color: var(--text-light);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.overview-card p {
+  margin: 0;
+  color: var(--text-dark);
+  font-weight: 600;
+  font-size: 16px;
+}
+
+/* Limits Grid */
+.limits-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
+  padding: 20px;
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.05) 0%, rgba(236, 72, 153, 0.05) 100%);
+  border-radius: 12px;
+}
+
+.limit-card {
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  text-align: center;
+  border-left: 4px solid var(--primary);
+}
+
+.limit-label {
+  display: block;
+  font-size: 12px;
+  color: var(--text-light);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+
+.limit-value {
+  display: block;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+/* Coverage Details */
+.coverage-details {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.coverage-details p {
+  margin: 0;
+  color: var(--text-light);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.tags-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.tag {
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  color: white;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  animation: slideInLeft 0.3s ease-out;
+  transition: all 0.2s ease;
+}
+
+.tag:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+}
+
+/* Waiting Periods */
+.waiting-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.waiting-card {
+  background: linear-gradient(135deg, #fef2f2 0%, #fce7f3 100%);
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  border-left: 4px solid var(--secondary);
+}
+
+.waiting-label {
+  display: block;
+  font-size: 12px;
+  color: #9d174d;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.waiting-value {
+  display: block;
+  font-size: 22px;
+  font-weight: 700;
+  color: #be185d;
+}
+
+.specific-ailments {
+  background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 20px;
+}
+
+.ailments-list {
+  list-style: none;
+  padding: 0;
+  margin: 15px 0 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ailments-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background: white;
+  border-radius: 8px;
+  border-left: 3px solid var(--primary);
+  transition: all 0.2s ease;
+}
+
+.ailments-list li:hover {
+  transform: translateX(4px);
+  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.1);
+}
+
+.ailment-name {
+  color: var(--text-dark);
+  font-weight: 500;
+}
+
+.ailment-days {
+  color: var(--text-light);
+  font-weight: 600;
+}
+
+/* Exclusions */
+.exclusions-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.exclusions-list li {
+  padding: 12px 15px;
+  background: #fef2f2;
+  border-radius: 8px;
+  color: var(--text-dark);
+  font-size: 14px;
+  border-left: 4px solid var(--danger);
+  line-height: 1.5;
+  transition: all 0.2s ease;
+}
+
+.exclusions-list li:hover {
+  transform: translateX(4px);
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.1);
+}
+
+/* Requirements */
+.requirements-list {
+  list-style: none;
+  padding: 0;
+  margin: 15px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.requirements-list li {
+  padding: 12px 15px;
+  background: #f0fdf4;
+  border-radius: 8px;
+  color: var(--text-dark);
+  font-size: 14px;
+  border-left: 4px solid var(--success);
+  transition: all 0.2s ease;
+}
+
+.requirements-list li:hover {
+  transform: translateX(4px);
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.1);
+}
+
+/* Hospitals */
+.hospitals-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+}
+
+.hospital-card {
+  background: linear-gradient(135deg, #ede9fe 0%, #fce7f3 100%);
+  padding: 20px;
+  border-radius: 10px;
+  font-weight: 600;
+  color: var(--primary-dark);
+  text-align: center;
+  border: 1px solid #ddd6fe;
+  transition: all 0.3s ease;
+}
+
+.hospital-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(99, 102, 241, 0.2);
+  border-color: var(--primary-light);
+}
+
+/* Animations */
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .policy-header {
+    padding: 40px 15px;
+  }
+
+  .policy-header h1 {
+    font-size: 26px;
+  }
+
+  .policy-wrapper {
+    padding: 20px 15px;
+  }
+
+  .policy-section {
+    padding: 20px;
+  }
+
+  .overview-grid,
+  .limits-grid,
+  .waiting-grid,
+  .hospitals-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ailments-list li {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+}
