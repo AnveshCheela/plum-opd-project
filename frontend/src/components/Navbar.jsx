@@ -43,7 +43,7 @@ function Navbar() {
             onClick={toggleRole}
             title={`Switch to ${isAdmin ? 'User' : 'Admin'} Mode`}
           >
-            {isAdmin ? 'Switch to User' : 'Switch to Admin'}
+            {isAdmin ? 'Switch to Employee' : 'Switch to Admin'}
           </button>
         </div>
       </div>
