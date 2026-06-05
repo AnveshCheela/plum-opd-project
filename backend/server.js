@@ -3,12 +3,20 @@ require("dotenv").config();
 
 const express = require("express");
 const path = require("path");
+const fs = require("fs");
 const connectDB = require("./config/Db");
 const claimRoutes = require("./routes/claimRoutes");
 const app = express();
 const cors = require("cors");
 
 const PORT = process.env.PORT || 5000;
+
+// Auto-create uploads directory (Railway ephemeral filesystem doesn't persist it)
+const uploadsDir = path.join(__dirname, "uploads");
+if (!fs.existsSync(uploadsDir)) {
+    fs.mkdirSync(uploadsDir, { recursive: true });
+    console.log("Created uploads/ directory");
+}
 
 connectDB();
 

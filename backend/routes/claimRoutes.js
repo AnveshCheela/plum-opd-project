@@ -86,14 +86,14 @@ res.json({
 });
 
     } catch (error) {
-
-      console.error("Upload Route Error:", error);
+      console.error("=== Upload Route Error ===");
+      console.error("Message:", error.message);
+      console.error("Stack:", error.stack);
 
       res.status(500).json({
         success: false,
         message: error.message || "Internal Server Error"
       });
-
     }
 
   }
