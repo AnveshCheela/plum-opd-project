@@ -23,6 +23,16 @@ Built for the **Plum AI Automation Engineer Intern Assignment**.
 4. **Rule engine** evaluates the claim against 8 policy rules in priority order
 5. **Decision** is returned instantly — APPROVED / REJECTED / PARTIAL / MANUAL_REVIEW — with confidence score, approved amount, and reasons
 6. **Result is stored** in MongoDB Atlas and visible in the claim history
+7. **Admin Manual Adjudication Override**: Administrators can view claims flagged as `MANUAL_REVIEW` under a dedicated queue page and override them by manually approving (with a custom payout amount) or rejecting them (with custom reasons).
+
+---
+
+## 🎨 Monochromatic UI/UX Redesign
+The interface has been fully updated to feature a **simple, elegant, and attractive black-and-white (monochromatic) theme** inspired by premium modern engineering dashboards:
+* **Clean Typography**: Uses modern, readable sans-serif layout styling powered by `Inter`.
+* **Monochrome Badges & Filters**: Replaced colorful red/green badges with high-contrast neutral capsules, dashed borders, and clear typographic weights.
+* **Full-Width Navigation**: Styled with an aligned top header featuring the brand, role badges (`EMPLOYEE` / `ADMIN`), active status capsules, and an outline role switcher button.
+* **Dynamic Grid Analytics**: Monochromatic bar chart representations and grid metrics styled in slate gray shades.
 
 ---
 
@@ -34,9 +44,11 @@ Built for the **Plum AI Automation Engineer Intern Assignment**.
 │  React 19 + Vite + React Router + Axios                 │
 │                                                         │
 │  Home → Upload Form → Result Page → Claim History       │
+│                                   → Admin Review Queue  │
 │                   ↕ REST API                            │
 └─────────────────────┬───────────────────────────────────┘
                       │ POST /api/claims/upload
+                      │ PUT /api/claims/:id/adjudicate
                       ▼
 ┌─────────────────────────────────────────────────────────┐
 │                    BACKEND (Railway)                    │
@@ -111,7 +123,7 @@ plum-opd-project/
 ├── frontend/                    # React app (Vite)
 │   ├── src/
 │   │   ├── components/
-│   │   │   ├── Navbar.jsx       # Navigation with role toggle
+│   │   │   ├── Navbar.jsx       # Navigation with role toggle & badge
 │   │   │   ├── FileUpload.jsx   # Claim submission form
 │   │   │   └── ClaimCard.jsx    # Claim history card
 │   │   ├── pages/
@@ -119,6 +131,8 @@ plum-opd-project/
 │   │   │   ├── UploadClaim.jsx  # Upload page wrapper
 │   │   │   ├── Result.jsx       # Adjudication result display
 │   │   │   ├── ClaimHistory.jsx # Filterable claims list
+│   │   │   ├── ReviewClaims.jsx # Admin manual review override page
+│   │   │   ├── ReviewClaims.css # Admin review page styles
 │   │   │   ├── Dashboard.jsx    # Admin analytics
 │   │   │   └── PolicyTerms.jsx  # Policy terms accordion
 │   │   ├── context/
@@ -134,7 +148,7 @@ plum-opd-project/
     ├── config/
     │   └── db.js                # MongoDB connection
     ├── routes/
-    │   └── claimRoutes.js       # API route definitions
+    │   └── claimRoutes.js       # API route definitions (upload, adjudicate)
     ├── services/
     │   ├── aiService.js         # Gemini LLM integration
     │   ├── ocrService.js        # Tesseract OCR
@@ -182,6 +196,7 @@ Rules are evaluated in priority order. The engine returns the **first matching n
 | `POST` | `/api/claims/upload` | Upload document → OCR → AI extraction → adjudicate → save |
 | `POST` | `/api/claims/test` | Test adjudication with raw JSON (no OCR/AI) |
 | `GET` | `/api/claims/` | Get all claims |
+| `PUT` | `/api/claims/:id/adjudicate` | Update claim decision manually (Approve with amount / Reject with reasons) |
 | `GET` | `/api/claims/stats` | Get dashboard statistics |
 
 ### POST `/api/claims/upload` — Request
@@ -317,7 +332,6 @@ Open `http://localhost:5173` in your browser.
 - **Real confidence scoring**: Calculate confidence from OCR quality + field completeness
 - **RAG-based reasoning**: Use a vector store of past claims to improve decision accuracy
 - **Fraud DB queries**: Query MongoDB for same-day claims instead of trusting client input
-- **Appeals workflow**: Allow MANUAL_REVIEW claims to be approved/rejected by an admin
 - **PDF text extraction**: Use `pdf-parse` for digital PDFs (better than OCR on text-based PDFs)
 - **Multi-document upload**: Support submitting bills + prescriptions as separate files
 - **Audit trail**: Track every rule evaluation with timestamps for compliance
