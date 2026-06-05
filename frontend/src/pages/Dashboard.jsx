@@ -118,10 +118,9 @@ function Dashboard() {
                 <div className="bar-label">Approved</div>
                 <div className="bar-container">
                   <div 
-                    className="bar" 
+                    className="bar bar-approved" 
                     style={{
-                      width: `${(stats.approved / stats.totalClaims) * 100}%`,
-                      background: 'linear-gradient(90deg, #10b981, #059669)'
+                      width: `${(stats.approved / stats.totalClaims) * 100}%`
                     }}
                   >
                     <span className="bar-text">{stats.approved}</span>
@@ -132,10 +131,9 @@ function Dashboard() {
                 <div className="bar-label">Rejected</div>
                 <div className="bar-container">
                   <div 
-                    className="bar" 
+                    className="bar bar-rejected" 
                     style={{
-                      width: `${(stats.rejected / stats.totalClaims) * 100}%`,
-                      background: 'linear-gradient(90deg, #ef4444, #dc2626)'
+                      width: `${(stats.rejected / stats.totalClaims) * 100}%`
                     }}
                   >
                     <span className="bar-text">{stats.rejected}</span>
@@ -146,10 +144,9 @@ function Dashboard() {
                 <div className="bar-label">Manual Review</div>
                 <div className="bar-container">
                   <div 
-                    className="bar" 
+                    className="bar bar-review" 
                     style={{
-                      width: `${(stats.manualReview / stats.totalClaims) * 100}%`,
-                      background: 'linear-gradient(90deg, #f59e0b, #d97706)'
+                      width: `${(stats.manualReview / stats.totalClaims) * 100}%`
                     }}
                   >
                     <span className="bar-text">{stats.manualReview}</span>

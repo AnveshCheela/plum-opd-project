@@ -1,0 +1,244 @@
+.review-claims-page {
+  flex: 1;
+  padding-bottom: 56px;
+  background: var(--bg-page);
+}
+
+.review-header {
+  background: var(--primary);
+  color: var(--bg-white);
+  padding: 48px 36px;
+  text-align: center;
+}
+
+.review-header h1 {
+  font-size: 32px;
+  font-weight: 800;
+  margin-bottom: 8px;
+  color: var(--bg-white);
+  letter-spacing: -0.04em;
+}
+
+.review-header p {
+  font-size: 14.5px;
+  color: var(--text-tertiary);
+  margin: 0;
+}
+
+.error-banner {
+  background: var(--bg-white);
+  color: var(--text-primary);
+  padding: 14px 20px;
+  border-radius: var(--radius);
+  margin-bottom: 24px;
+  border: 1px solid var(--border-strong);
+  border-left-width: 4px;
+  font-size: 13.5px;
+  font-weight: 700;
+}
+
+/* Review Cards */
+.review-card {
+  background: var(--bg-white);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  margin-bottom: 20px;
+  border: 1px solid var(--border);
+  border-left: 6px solid var(--primary);
+  box-shadow: var(--shadow-sm);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.review-card:hover {
+  border-color: var(--text-tertiary);
+  box-shadow: var(--shadow-md);
+}
+
+.review-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.patient-name {
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+  letter-spacing: -0.02em;
+}
+
+.member-id {
+  font-size: 12px;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+/* Review Grid */
+.review-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.review-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.review-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.review-item label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 4px;
+}
+
+.review-item p {
+  font-size: 14px;
+  color: var(--text-primary);
+  margin: 0;
+  font-weight: 500;
+}
+
+.review-item .bold-amount {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+/* Fraud Warnings */
+.fraud-warning {
+  background: var(--bg-white);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--text-secondary);
+  padding: 14px 18px;
+  border-radius: var(--radius);
+}
+
+.fraud-warning label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.fraud-warning ul {
+  margin: 0;
+  padding-left: 16px;
+}
+
+.fraud-warning li {
+  color: var(--text-secondary);
+  margin-bottom: 4px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* Actions Section */
+.review-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.review-actions .reject-btn {
+  border-color: var(--border);
+}
+
+.review-actions .reject-btn:hover {
+  border-color: var(--text-primary);
+  background: var(--border-light);
+}
+
+/* Inline Adjudication Panel */
+.inline-action-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 20px;
+  background: var(--border-light);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  animation: slideInDown 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.inline-action-panel .form-group {
+  margin-bottom: 0;
+}
+
+.panel-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .review-header {
+    padding: 32px 20px;
+  }
+
+  .review-header h1 {
+    font-size: 24px;
+  }
+
+  .review-card {
+    padding: 16px;
+  }
+
+  .review-card-header {
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .review-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .review-actions {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .review-actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .panel-actions {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .panel-actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}

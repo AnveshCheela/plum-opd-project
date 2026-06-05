@@ -7,6 +7,7 @@ import UploadClaim from "./pages/UploadClaim";
 import Result from "./pages/Result";
 import ClaimHistory from "./pages/ClaimHistory";
 import PolicyTerms from "./pages/PolicyTerms";
+import ReviewClaims from "./pages/ReviewClaims";
 import "./App.css";
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
   <Route path="/history" element={<ClaimHistory />} />
   <Route path="/dashboard" element={<Dashboard />} />
   <Route path="/policy" element={<PolicyTerms />} />
+  <Route path="/review" element={<ReviewClaims />} />
 
         </Routes>
       </BrowserRouter>

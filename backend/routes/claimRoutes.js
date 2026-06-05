@@ -178,4 +178,50 @@ const approvalRate =
     });
   }
 });
+
+// Update claim adjudication decision manually by Admin
+router.put("/:id/adjudicate", async (req, res) => {
+  try {
+    const { decision, approvedAmount, rejectionReasons } = req.body;
+
+    if (!["APPROVED", "REJECTED"].includes(decision)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid decision status. Must be APPROVED or REJECTED"
+      });
+    }
+
+    const claim = await Claim.findById(req.params.id);
+    if (!claim) {
+      return res.status(404).json({
+        success: false,
+        message: "Claim not found"
+      });
+    }
+
+    claim.decision = decision;
+    if (decision === "APPROVED") {
+      claim.approvedAmount = Number(approvedAmount) !== undefined ? Number(approvedAmount) : (claim.claimAmountRequested || claim.claimAmount || 0);
+      claim.rejectionReasons = [];
+    } else {
+      claim.approvedAmount = 0;
+      claim.rejectionReasons = Array.isArray(rejectionReasons) ? rejectionReasons : [rejectionReasons || "Manually rejected by administrator"];
+    }
+
+    await claim.save();
+
+    res.json({
+      success: true,
+      message: `Claim decision manually updated to ${decision}`,
+      claim
+    });
+  } catch (error) {
+    console.error("Adjudicate PUT Error:", error);
+    res.status(500).json({
+      success: false,
+      message: error.message || "Internal server error"
+    });
+  }
+});
+
 module.exports = router;

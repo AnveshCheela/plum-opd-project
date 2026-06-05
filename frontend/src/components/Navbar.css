@@ -1,164 +1,149 @@
 .navbar {
-  background: linear-gradient(135deg, #6366f1 0%, #ec4899 100%);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   position: sticky;
   top: 0;
   z-index: 100;
-  padding: 0;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
 }
 
 .navbar-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 16px 20px;
+  padding: 0 32px;
+  height: 72px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
+}
+
+.navbar-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
 .navbar-brand {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   text-decoration: none;
-  font-weight: 700;
-  font-size: 24px;
+}
+
+.brand-logo {
+  width: 36px;
+  height: 36px;
+  background: var(--primary);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
   color: white;
-  transition: transform 0.2s ease;
-}
-
-.navbar-brand:hover {
-  transform: scale(1.05);
-}
-
-.brand-icon {
-  font-size: 28px;
 }
 
 .brand-text {
-  background: linear-gradient(135deg, #ffffff 0%, #f0f4ff 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  letter-spacing: 0.5px;
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -0.03em;
+}
+
+.brand-dot {
+  color: var(--primary);
+}
+
+.role-badge {
+  background: #f1f5f9;
+  color: #64748b;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 4px;
+  letter-spacing: 0.05em;
+  display: inline-block;
 }
 
 .navbar-links {
   display: flex;
-  gap: 32px;
   align-items: center;
+  gap: 8px;
 }
 
 .nav-link {
-  color: rgba(255, 255, 255, 0.9);
-  font-weight: 500;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--text-secondary);
   text-decoration: none;
-  font-size: 15px;
-  transition: all 0.3s ease;
-  position: relative;
-  padding: 8px 0;
-}
-
-.nav-link::after {
-  content: '';
-  position: absolute;
-  bottom: -4px;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: white;
-  transition: width 0.3s ease;
+  padding: 8px 16px;
+  border-radius: 6px;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .nav-link:hover {
-  color: white;
+  color: var(--text-primary);
+  background: #f1f5f9;
 }
 
-.nav-link:hover::after {
-  width: 100%;
-}
-
-.nav-link-active {
-  color: white;
-}
-
-.nav-link-active::after {
-  width: 100%;
+.nav-link.active {
+  color: var(--text-primary);
+  background: #f1f5f9;
+  font-weight: 700;
 }
 
 .role-toggle {
-  background: rgba(255, 255, 255, 0.2);
-  border: 2px solid rgba(255, 255, 255, 0.4);
-  color: white;
-  padding: 8px 16px;
-  border-radius: 20px;
-  font-weight: 600;
-  cursor: pointer;
-  font-size: 13px;
   display: flex;
   align-items: center;
-  gap: 6px;
-  transition: all 0.3s ease;
-  margin-left: 20px;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  border: 1px solid var(--border);
+  background: var(--bg-white);
+  color: var(--text-secondary);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  margin-left: 12px;
 }
 
 .role-toggle:hover {
-  background: rgba(255, 255, 255, 0.3);
-  border-color: rgba(255, 255, 255, 0.6);
-  transform: translateY(-2px);
+  border-color: var(--text-primary);
+  color: var(--text-primary);
+  background: #f1f5f9;
 }
 
-.role-icon {
-  font-size: 16px;
-  line-height: 1;
-}
-
-.role-text {
-  display: inline;
-}
-
-.admin-mode {
-  background: rgba(16, 110, 190, 0.3);
-  border-color: rgba(16, 110, 190, 0.6);
-}
-
-.admin-mode:hover {
-  background: rgba(16, 110, 190, 0.4);
-}
-
-.user-mode {
-  background: rgba(15, 252, 190, 0.3);
-  border-color: rgba(15, 252, 190, 0.6);
-}
-
-.user-mode:hover {
-  background: rgba(15, 252, 190, 0.4);
-}
-
-@media (max-width: 768px) {
-  .navbar-container {
+@media (max-width: 868px) {
+  .navbar-container { 
+    height: auto;
     flex-direction: column;
     gap: 16px;
+    padding: 20px 16px;
   }
-
+  
+  .navbar-left {
+    width: 100%;
+    justify-content: space-between;
+  }
+  
   .navbar-links {
-    gap: 16px;
-    font-size: 13px;
     flex-wrap: wrap;
     justify-content: center;
+    width: 100%;
+    gap: 6px;
   }
-
+  
+  .nav-link { 
+    padding: 6px 12px; 
+    font-size: 12.5px; 
+  }
+  
   .role-toggle {
     margin-left: 0;
-    font-size: 12px;
+    margin-top: 4px;
     padding: 6px 12px;
-  }
-
-  .role-text {
-    display: none;
-  }
-
-  .navbar-brand {
-    font-size: 20px;
+    width: 100%;
+    justify-content: center;
   }
 }
