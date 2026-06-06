@@ -3,7 +3,7 @@ const multer = require("multer");
 
 const router = express.Router();
 const extractText = require("../services/ocrService");
-const extractClaimData = require("../services/aiService");
+const { extractClaimData, generateEmbedding } = require("../services/aiService");
 const adjudicateClaim = require("../services/adjudicationService");
 const Claim = require("../models/Claim");
 const PolicyConfig = require("../models/PolicyConfig");
@@ -89,7 +89,11 @@ router.post(
       // Gemini
       const extractedData = await extractClaimData(text);
 
-      // Rule Engine — pass both AI-extracted data AND form fields
+      // Generate Semantic Embedding for the Diagnosis/Procedures text
+      const textForEmbedding = `${extractedData.diagnosis || ""} ${extractedData.procedures?.join(" ") || ""}`.trim() || text;
+      const embedding = await generateEmbedding(textForEmbedding);
+
+      // Rule Engine — pass AI-extracted data, form fields, and the semantic vector embedding
       const formData = {
         memberId:        req.body.memberId,
         memberName:      req.body.memberName,
@@ -101,9 +105,9 @@ router.post(
         previousClaimsSameDay: Number(req.body.previousClaimsSameDay) || 0
       };
       
-      const decision = await adjudicateClaim(extractedData, formData);
+      const decision = await adjudicateClaim(extractedData, formData, embedding);
 
-      // Save to MongoDB
+      // Save to MongoDB (including vector embedding)
       await Claim.create({
         memberId: req.body.memberId,
         memberName: req.body.memberName,
@@ -126,7 +130,8 @@ router.post(
         decision: decision.decision,
         approvedAmount: decision.approvedAmount,
         confidenceScore: decision.confidenceScore,
-        rejectionReasons: decision.rejectionReasons
+        rejectionReasons: decision.rejectionReasons,
+        embedding: embedding
       });
 
       res.json({

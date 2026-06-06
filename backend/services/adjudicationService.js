@@ -19,7 +19,20 @@ const isAltMedicineTreatment = (diagnosis = "", procedures = []) => {
     return ALT_MEDICINE_KEYWORDS.some(kw => text.includes(kw));
 };
 
-const adjudicateClaim = async (claimData, formData = {}) => {
+const cosineSimilarity = (vecA, vecB) => {
+    let dotProduct = 0.0;
+    let normA = 0.0;
+    let normB = 0.0;
+    for (let i = 0; i < vecA.length; i++) {
+        dotProduct += vecA[i] * vecB[i];
+        normA += vecA[i] * vecA[i];
+        normB += vecB[i] * vecB[i];
+    }
+    if (normA === 0 || normB === 0) return 0;
+    return dotProduct / (Math.sqrt(normA) * Math.sqrt(normB));
+};
+
+const adjudicateClaim = async (claimData, formData = {}, currentEmbedding = []) => {
     // 1. Fetch dynamic config from MongoDB
     let config;
     try {
@@ -62,6 +75,40 @@ const adjudicateClaim = async (claimData, formData = {}) => {
     // ── Rule 2: Fraud Detection (TC008) ─────────────────────────────────
     result = checkFraud(data.previousClaimsSameDay);
     if (result) return result;
+
+    // ── Semantic RAG / Similarity check (Vector Search) ──────────────────
+    if (currentEmbedding && currentEmbedding.length > 0 && data.memberId) {
+        try {
+            const Claim = require("../models/Claim");
+            // Find all historical claims for this member
+            const pastClaims = await Claim.find({ memberId: data.memberId });
+            
+            for (const past of pastClaims) {
+                if (past.embedding && past.embedding.length === currentEmbedding.length) {
+                    const similarity = cosineSimilarity(currentEmbedding, past.embedding);
+                    
+                    // Cosine similarity threshold for high diagnosis/procedure overlap (e.g. > 90%)
+                    if (similarity > 0.90) {
+                        // Check if it's on the same treatment date
+                        const isCloseDate = past.treatmentDate === treatmentDate;
+                        if (isCloseDate) {
+                            return {
+                                decision: "MANUAL_REVIEW",
+                                approvedAmount: 0,
+                                confidenceScore: 0.70,
+                                rejectionReasons: [
+                                    `SEMANTIC_DUPLICATE_SUSPECTED: Matches historical claim ID ${past._id} with ${Math.round(similarity * 100)}% similarity on the same treatment date (${treatmentDate || "N/A"}).`
+                                ],
+                                notes: "Flagged by Semantic Vector Similarity search."
+                            };
+                        }
+                    }
+                }
+            }
+        } catch (err) {
+            console.error("Vector search RAG failed:", err.message);
+        }
+    }
 
     // ── Rule 3: Document Validation (TC004) ──────────────────────────────
     result = checkDocuments(claimData);

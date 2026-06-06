@@ -57,6 +57,11 @@ networkHospital: Boolean,
     rejectionReasons: {
         type: [String],
         default: []
+    },
+
+    embedding: {
+        type: [Number],
+        default: []
     }
 
 }, {
