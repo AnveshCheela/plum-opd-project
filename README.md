@@ -292,23 +292,25 @@ Open `http://localhost:5173` in your browser.
 
 ---
 
-## ☁️ Deployment
+## ☁️ Deployment & CI/CD Pipeline
 
-### Backend → Railway
+The project implements a complete automated CI/CD pipeline using **GitHub Actions**, **Vercel**, and **Railway**.
 
-1. Push to GitHub
-2. New Railway project → Deploy from GitHub → select repo
-3. Set **Root Directory**: `backend`
-4. Add environment variables: `MONGO_URI`, `GEMINI_API_KEY`, `FRONTEND_URL`
-5. Railway auto-detects `npm start` as the start command
-6. Copy the generated Railway domain
+### 🧪 Continuous Integration (CI)
+On every Push and Pull Request to `main` or `master` branches, a GitHub Actions workflow:
+1. **Frontend**: Sets up Node.js, installs cached dependencies, and runs `npm run build` to verify compilation.
+2. **Backend**: Sets up Node.js, installs dependencies, and runs checks to ensure backend code is deployable.
 
-### Frontend → Vercel
+### 🚀 Continuous Deployment (CD)
+Once the CI builds pass, deployments are automatically triggered:
+- **Frontend (Vercel)**: Automatically deployed using the `amondnet/vercel-deploy-action@v2`.
+- **Backend (Railway)**: Automatically deployed using the `railway-cli` in the CD pipeline.
 
-1. New Vercel project → Import from GitHub
-2. Set **Root Directory**: `frontend`, **Framework**: Vite
-3. Add environment variable: `VITE_API_URL=https://YOUR-RAILWAY-DOMAIN.up.railway.app/api`
-4. Deploy
+To activate CD deployments via GitHub Actions, add these secrets to your GitHub repository settings:
+* `VERCEL_TOKEN`: Vercel Account API Token.
+* `VERCEL_ORG_ID`: Vercel Organization ID.
+* `VERCEL_PROJECT_ID`: Vercel Project ID.
+* `RAILWAY_TOKEN`: Railway Project Access Token.
 
 ---
 
