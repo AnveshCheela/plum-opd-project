@@ -155,11 +155,13 @@
   margin-top: 8px;
 }
 
-.review-actions .reject-btn {
+.review-actions .reject-btn,
+.review-actions .info-btn {
   border-color: var(--border);
 }
 
-.review-actions .reject-btn:hover {
+.review-actions .reject-btn:hover,
+.review-actions .info-btn:hover {
   border-color: var(--text-primary);
   background: var(--border-light);
 }

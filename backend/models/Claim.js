@@ -38,7 +38,8 @@ networkHospital: Boolean,
             "APPROVED",
             "REJECTED",
             "PARTIAL",
-            "MANUAL_REVIEW"
+            "MANUAL_REVIEW",
+            "INFO_REQUIRED"
         ],
         default: "MANUAL_REVIEW"
     },

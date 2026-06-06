@@ -103,12 +103,14 @@
   color: var(--bg-white);
 }
 
-.filter-review:hover {
+.filter-review:hover,
+.filter-info:hover {
   border-color: var(--text-primary);
   color: var(--text-primary);
 }
 
-.filter-review.active {
+.filter-review.active,
+.filter-info.active {
   background: var(--text-secondary);
   border-color: var(--text-secondary);
   color: var(--bg-white);

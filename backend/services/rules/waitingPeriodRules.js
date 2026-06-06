@@ -1,22 +1,4 @@
-/**
- * Waiting Period Rule
- * TC005: Rejects if treatment date is within waiting period from join date.
- * Uses actual date math — not just a keyword check.
- * Policy waiting periods (in days):
- *   - Initial waiting: 30 days (all conditions)
- *   - Diabetes: 90 days
- *   - Hypertension: 90 days
- *   - Pre-existing diseases: 365 days
- *   - Joint replacement: 730 days
- */
-const WAITING_PERIODS = {
-    diabetes: 90,
-    hypertension: 90,
-    joint_replacement: 730,
-    initial: 30
-};
-
-const checkWaitingPeriod = (diagnosis, joinDate, treatmentDate) => {
+const checkWaitingPeriod = (diagnosis, joinDate, treatmentDate, config) => {
     const dx = (diagnosis || "").toLowerCase();
 
     // Determine which waiting period applies
@@ -24,13 +6,13 @@ const checkWaitingPeriod = (diagnosis, joinDate, treatmentDate) => {
     let conditionName = null;
 
     if (dx.includes("diabetes")) {
-        requiredDays = WAITING_PERIODS.diabetes;
+        requiredDays = (config && config.waitingPeriodDiabetes) || 90;
         conditionName = "Diabetes";
     } else if (dx.includes("hypertension") || dx.includes("high blood pressure")) {
-        requiredDays = WAITING_PERIODS.hypertension;
+        requiredDays = (config && config.waitingPeriodHypertension) || 90;
         conditionName = "Hypertension";
     } else if (dx.includes("joint replacement")) {
-        requiredDays = WAITING_PERIODS.joint_replacement;
+        requiredDays = (config && config.waitingPeriodJointReplacement) || 730;
         conditionName = "Joint Replacement";
     }
 

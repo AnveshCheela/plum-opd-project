@@ -314,3 +314,124 @@
     padding: 20px 16px;
   }
 }
+
+/* AI Metrics Card & Policy Config Card Grid */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-top: 24px;
+}
+
+@media (max-width: 900px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.section-desc {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-bottom: 24px;
+  margin-top: 4px;
+}
+
+.metrics-list {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.metric-progress-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.metric-progress-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.metric-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.metric-percentage {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.progress-bar-container {
+  height: 8px;
+  background: var(--border-light);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: var(--text-secondary);
+  border-radius: var(--radius-sm);
+  transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.overall-accuracy-item .font-bold {
+  font-weight: 700;
+}
+
+.overall-bar .progress-bar-fill {
+  background: var(--primary);
+}
+
+/* Config Form styling */
+.config-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+@media (max-width: 500px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.config-save-btn {
+  align-self: flex-start;
+  margin-top: 8px;
+}
+
+/* Alerts inside cards */
+.alert {
+  padding: 10px 14px;
+  border-radius: var(--radius);
+  font-size: 12.5px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  border: 1px solid transparent;
+}
+
+.alert-success {
+  background: var(--bg-white);
+  color: var(--text-primary);
+  border-color: var(--primary);
+}
+
+.alert-danger {
+  background: var(--bg-white);
+  color: var(--text-secondary);
+  border-color: var(--border);
+  border-style: dashed;
+}

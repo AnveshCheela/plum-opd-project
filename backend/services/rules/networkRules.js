@@ -1,9 +1,3 @@
-/**
- * Network Hospital Rule
- * TC010: Cashless approval with 20% network discount for network hospitals.
- * Policy network hospitals: Apollo, Fortis, Max, Manipal, Narayana
- * Network discount: 20% (approve at 80% of claimed amount)
- */
 const NETWORK_HOSPITALS = [
     "apollo hospitals",
     "fortis healthcare",
@@ -12,16 +6,19 @@ const NETWORK_HOSPITALS = [
     "narayana health"
 ];
 
-const checkNetworkHospital = (claimData) => {
+const checkNetworkHospital = (claimData, config) => {
     const hospitalName = (claimData.hospitalName || claimData.hospital || "").toLowerCase().trim();
     const isCashless = claimData.cashlessRequest === true || claimData.cashless_request === true;
     const isNetworkHospital = claimData.networkHospital === true ||
         NETWORK_HOSPITALS.some(h => hospitalName.includes(h));
 
     if (isCashless && isNetworkHospital) {
+        const discountPercentage = (config && config.networkDiscountPercentage) !== undefined ? config.networkDiscountPercentage : 20;
+        const discountRate = discountPercentage / 100;
+        
         const claimAmount = Number(claimData.claimAmount) || Number(claimData.claimAmountRequested) || 0;
-        const networkDiscount = claimAmount * 0.20;
-        const approvedAmount = claimAmount * 0.80;
+        const networkDiscount = claimAmount * discountRate;
+        const approvedAmount = claimAmount * (1 - discountRate);
 
         return {
             decision: "APPROVED",
@@ -30,7 +27,7 @@ const checkNetworkHospital = (claimData) => {
             rejectionReasons: [],
             cashlessApproved: true,
             networkDiscount: Math.round(networkDiscount),
-            notes: `Cashless approved at network hospital. 20% network discount of ₹${Math.round(networkDiscount)} applied.`
+            notes: `Cashless approved at network hospital. ${discountPercentage}% network discount of ₹${Math.round(networkDiscount)} applied.`
         };
     }
 

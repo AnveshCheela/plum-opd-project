@@ -5,6 +5,7 @@ function ClaimCard({ claim }) {
     if (claim.decision === "APPROVED") return "success";
     if (claim.decision === "REJECTED") return "danger";
     if (claim.decision === "PARTIAL") return "warning";
+    if (claim.decision === "INFO_REQUIRED") return "info";
     return "info";
   };
 
@@ -12,6 +13,7 @@ function ClaimCard({ claim }) {
     if (claim.decision === "APPROVED") return "✅";
     if (claim.decision === "REJECTED") return "❌";
     if (claim.decision === "PARTIAL") return "⚠️";
+    if (claim.decision === "INFO_REQUIRED") return "📝";
     return "👁️";
   };
 
@@ -37,7 +39,9 @@ function ClaimCard({ claim }) {
         </div>
         <div className={`claim-status badge-${getStatusColor()}`}>
           <span className="status-icon">{getStatusIcon()}</span>
-          <span className="status-text">{claim.decision}</span>
+          <span className="status-text">
+            {claim.decision === "INFO_REQUIRED" ? "INFO REQUIRED" : claim.decision}
+          </span>
         </div>
       </div>
 
@@ -74,7 +78,7 @@ function ClaimCard({ claim }) {
 
         {claim.rejectionReasons && claim.rejectionReasons.length > 0 && (
           <div className="rejection-reasons">
-            <label>Rejection Reasons:</label>
+            <label>{claim.decision === "INFO_REQUIRED" ? "Information Requested:" : "Rejection Reasons:"}</label>
             <ul>
               {claim.rejectionReasons.map((reason, idx) => (
                 <li key={idx}>{reason}</li>

@@ -74,6 +74,12 @@ function ClaimHistory() {
             >
               👁️ Manual Review ({claims.filter(c => c.decision === "MANUAL_REVIEW").length})
             </button>
+            <button 
+              className={`filter-btn filter-info ${filter === "INFO_REQUIRED" ? "active" : ""}`}
+              onClick={() => setFilter("INFO_REQUIRED")}
+            >
+              📝 Info Required ({claims.filter(c => c.decision === "INFO_REQUIRED").length})
+            </button>
           </div>
         </div>
 

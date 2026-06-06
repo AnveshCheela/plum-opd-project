@@ -18,7 +18,29 @@ if (!fs.existsSync(uploadsDir)) {
     console.log("Created uploads/ directory");
 }
 
-connectDB();
+const PolicyConfig = require("./models/PolicyConfig");
+async function initializeConfig() {
+    try {
+        const count = await PolicyConfig.countDocuments();
+        if (count === 0) {
+            await PolicyConfig.create({
+                perClaimLimit: 5000,
+                waitingPeriodDiabetes: 90,
+                waitingPeriodHypertension: 90,
+                waitingPeriodJointReplacement: 730,
+                networkDiscountPercentage: 20,
+                copayPercentage: 10
+            });
+            console.log("Default policy configurations initialized in MongoDB.");
+        }
+    } catch (err) {
+        console.error("Failed to initialize policy config:", err.message);
+    }
+}
+
+connectDB().then(() => {
+    initializeConfig();
+});
 
 app.use(cors({
   origin: process.env.FRONTEND_URL || "*",

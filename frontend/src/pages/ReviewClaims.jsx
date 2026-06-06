@@ -48,6 +48,12 @@ function ReviewClaims() {
     setApprovedAmount("");
   };
 
+  const handleStartRequestInfo = (claim) => {
+    setActionState({ id: claim._id, type: "info" });
+    setRejectionReason("Please provide a clearer prescription or itemized bill.");
+    setApprovedAmount("");
+  };
+
   const handleCancelAction = () => {
     setActionState(null);
     setApprovedAmount("");
@@ -61,14 +67,17 @@ function ReviewClaims() {
     setError("");
 
     try {
-      const decisionData = {
-        decision: actionState.type === "approve" ? "APPROVED" : "REJECTED"
-      };
+      const decisionData = {};
 
       if (actionState.type === "approve") {
+        decisionData.decision = "APPROVED";
         decisionData.approvedAmount = Number(approvedAmount) || 0;
-      } else {
+      } else if (actionState.type === "reject") {
+        decisionData.decision = "REJECTED";
         decisionData.rejectionReasons = [rejectionReason || "Manually rejected by administrator"];
+      } else if (actionState.type === "info") {
+        decisionData.decision = "INFO_REQUIRED";
+        decisionData.rejectionReasons = [rejectionReason || "Additional information requested by administrator"];
       }
 
       await API.put(`/claims/${claimId}/adjudicate`, decisionData);
@@ -179,6 +188,12 @@ function ReviewClaims() {
                         >
                           Reject Claim
                         </button>
+                        <button 
+                          className="btn btn-secondary info-btn"
+                          onClick={() => handleStartRequestInfo(claim)}
+                        >
+                          Request Info
+                        </button>
                       </div>
                     )}
 
@@ -199,7 +214,7 @@ function ReviewClaims() {
                               placeholder="Approved amount"
                             />
                           </div>
-                        ) : (
+                        ) : actionState.type === "reject" ? (
                           <div className="form-group">
                             <label htmlFor={`reason-${claim._id}`}>Rejection Reasons / Notes</label>
                             <textarea
@@ -209,6 +224,18 @@ function ReviewClaims() {
                               onChange={(e) => setRejectionReason(e.target.value)}
                               disabled={isCurrentSubmitting}
                               placeholder="Reason for rejection..."
+                            />
+                          </div>
+                        ) : (
+                          <div className="form-group">
+                            <label htmlFor={`reason-${claim._id}`}>Requested Information / Comments</label>
+                            <textarea
+                              id={`reason-${claim._id}`}
+                              rows="3"
+                              value={rejectionReason}
+                              onChange={(e) => setRejectionReason(e.target.value)}
+                              disabled={isCurrentSubmitting}
+                              placeholder="Describe what documents or details are needed..."
                             />
                           </div>
                         )}

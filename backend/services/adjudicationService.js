@@ -1,24 +1,3 @@
-/**
- * Adjudication Service — Rule Engine Orchestrator
- *
- * Rules are checked in priority order per the assignment spec.
- * The engine runs ALL applicable rules and returns the first match
- * that causes a non-approval decision (safety-first approach).
- *
- * Priority:
- *  1. Network Hospital (cashless fast-track — approve before other checks)
- *  2. Fraud Detection
- *  3. Document Validation
- *  4. Dental / Cosmetic
- *  5. Pre-Authorization
- *  6. Waiting Period (needs joinDate + treatmentDate for date math)
- *  7. Coverage Exclusions
- *  8. Per-Claim Limit
- *  9. Default: APPROVED with 10% copay
- *
- * Alternative Medicine (Ayurveda, Homeopathy, Unani): 0% copay per policy.
- */
-
 const { checkNetworkHospital } = require("./rules/networkRules");
 const { checkFraud }           = require("./rules/fraudRules");
 const { checkDocuments }       = require("./rules/documentRules");
@@ -27,6 +6,7 @@ const { checkPreAuth }         = require("./rules/preAuthRules");
 const { checkWaitingPeriod }   = require("./rules/waitingPeriodRules");
 const { checkCoverage }        = require("./rules/coverageRules");
 const { checkPerClaimLimit }   = require("./rules/limitRules");
+const PolicyConfig             = require("../models/PolicyConfig");
 
 // Alternative medicine keywords — no copay per policy terms
 const ALT_MEDICINE_KEYWORDS = [
@@ -39,7 +19,25 @@ const isAltMedicineTreatment = (diagnosis = "", procedures = []) => {
     return ALT_MEDICINE_KEYWORDS.some(kw => text.includes(kw));
 };
 
-const adjudicateClaim = (claimData, formData = {}) => {
+const adjudicateClaim = async (claimData, formData = {}) => {
+    // 1. Fetch dynamic config from MongoDB
+    let config;
+    try {
+        config = await PolicyConfig.findOne();
+    } catch (err) {
+        console.error("Failed to query policy config, using defaults:", err.message);
+    }
+    
+    if (!config) {
+        config = {
+            perClaimLimit: 5000,
+            waitingPeriodDiabetes: 90,
+            waitingPeriodHypertension: 90,
+            waitingPeriodJointReplacement: 730,
+            networkDiscountPercentage: 20,
+            copayPercentage: 10
+        };
+    }
 
     // Merge form data (member details from frontend) with AI-extracted data
     const data = { ...claimData, ...formData };
@@ -58,7 +56,7 @@ const adjudicateClaim = (claimData, formData = {}) => {
     result = checkNetworkHospital({
         ...data,
         claimAmount
-    });
+    }, config);
     if (result) return result;
 
     // ── Rule 2: Fraud Detection (TC008) ─────────────────────────────────
@@ -78,7 +76,7 @@ const adjudicateClaim = (claimData, formData = {}) => {
     if (result) return result;
 
     // ── Rule 6: Waiting Period with real date math (TC005) ───────────────
-    result = checkWaitingPeriod(diagnosis, joinDate, treatmentDate);
+    result = checkWaitingPeriod(diagnosis, joinDate, treatmentDate, config);
     if (result) return result;
 
     // ── Rule 7: Coverage Exclusions (TC009) ──────────────────────────────
@@ -86,14 +84,13 @@ const adjudicateClaim = (claimData, formData = {}) => {
     if (result) return result;
 
     // ── Rule 8: Per-Claim Limit (TC003) ──────────────────────────────────
-    result = checkPerClaimLimit(claimAmount);
+    result = checkPerClaimLimit(claimAmount, config);
     if (result) return result;
 
     // ── Default: APPROVED ────────────────────────────────────────────────
-    // TC006 fix: Alternative medicine has 0% copay per policy.
-    // All other treatments: 10% copay (approve at 90%).
     const altMedicine = isAltMedicineTreatment(diagnosis, procedures);
-    const copayRate   = altMedicine ? 0 : 0.10;
+    const copayPercentage = (config.copayPercentage !== undefined) ? config.copayPercentage : 10;
+    const copayRate = altMedicine ? 0 : (copayPercentage / 100);
     const approvedAmount = Math.round(claimAmount * (1 - copayRate));
 
     return {
