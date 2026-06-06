@@ -64,6 +64,12 @@
   margin-bottom: 6px;
 }
 
+.form-helper-text {
+  font-size: 11px;
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+
 /* Checkboxes */
 .checkboxes-group {
   display: flex;

@@ -35,14 +35,46 @@ function FileUpload() {
     setError("");
   };
 
-  const handleUpload = async () => {
-    if (!file) {
-      setError("Please select a document file");
-      return;
+  const validateForm = () => {
+    if (!formDataState.memberId.trim()) {
+      return "Member ID is required.";
     }
+    if (!formDataState.memberName.trim()) {
+      return "Patient Name is required.";
+    }
+    if (!formDataState.claimAmount) {
+      return "Claim Amount is required.";
+    }
+    const amount = Number(formDataState.claimAmount);
+    if (isNaN(amount) || amount <= 0) {
+      return "Claim Amount must be a positive number.";
+    }
+    if (amount < 500) {
+      return "Claim Amount must be at least ₹500 (per policy terms minimum limit).";
+    }
+    if (!formDataState.treatmentDate) {
+      return "Treatment Date is required.";
+    }
+    if (formDataState.joinDate && formDataState.treatmentDate) {
+      const join = new Date(formDataState.joinDate);
+      const treatment = new Date(formDataState.treatmentDate);
+      if (!isNaN(join) && !isNaN(treatment) && treatment < join) {
+        return "Treatment Date cannot be before the Policy Join Date.";
+      }
+    }
+    if (!file) {
+      return "Please select and upload a medical document file (bill/prescription).";
+    }
+    if (file.size > 10 * 1024 * 1024) {
+      return "File size exceeds the 10MB limit. Please upload a smaller file.";
+    }
+    return null;
+  };
 
-    if (!formDataState.memberId || !formDataState.memberName) {
-      setError("Please fill in Member ID and Name");
+  const handleUpload = async () => {
+    const validationError = validateForm();
+    if (validationError) {
+      setError(validationError);
       return;
     }
 
@@ -81,7 +113,7 @@ function FileUpload() {
 
         <div className="form-grid">
           <div className="form-group">
-            <label htmlFor="memberId">Member ID *</label>
+            <label htmlFor="memberId">Member ID (Employee ID) *</label>
             <input
               id="memberId"
               type="text"
@@ -90,10 +122,11 @@ function FileUpload() {
               value={formDataState.memberId}
               onChange={handleChange}
             />
+            <span className="form-helper-text">Unique identifier of the employee</span>
           </div>
 
           <div className="form-group">
-            <label htmlFor="memberName">Member Name *</label>
+            <label htmlFor="memberName">Patient Name *</label>
             <input
               id="memberName"
               type="text"
@@ -102,10 +135,11 @@ function FileUpload() {
               value={formDataState.memberName}
               onChange={handleChange}
             />
+            <span className="form-helper-text">Patient's name as it appears on documents</span>
           </div>
 
           <div className="form-group">
-            <label htmlFor="treatmentDate">Treatment Date</label>
+            <label htmlFor="treatmentDate">Treatment Date *</label>
             <input
               id="treatmentDate"
               type="date"

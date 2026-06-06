@@ -20,6 +20,7 @@ Return ONLY valid JSON matching the following schema.
 JSON Schema:
 {
   "patientName":"",
+  "hospitalName":"",
   "doctorName":"",
   "doctorRegistration":"",
   "diagnosis":"",
@@ -52,6 +53,7 @@ Consultation fee: Rs 1500. Total Claim: 6500"
 Output JSON:
 {
   "patientName": "John Doe",
+  "hospitalName": "DR. SHALINI SHARMA, MD DENTAL CLINIC",
   "doctorName": "DR. SHALINI SHARMA",
   "doctorRegistration": "12345/A",
   "diagnosis": "Dental Caries",
@@ -89,6 +91,7 @@ Consultation & Medicines: Rs 3000"
 Output JSON:
 {
   "patientName": "Jane Smith",
+  "hospitalName": "APOLLO HOSPITALS",
   "doctorName": "Dr. Ramesh Kumar",
   "doctorRegistration": "MC-6789",
   "diagnosis": "Acute Gastritis",

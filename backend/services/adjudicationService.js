@@ -66,10 +66,7 @@ const adjudicateClaim = async (claimData, formData = {}, currentEmbedding = []) 
     let result;
 
     // ── Rule 1: Network Hospital Cashless (TC010) ────────────────────────
-    result = checkNetworkHospital({
-        ...data,
-        claimAmount
-    }, config);
+    result = checkNetworkHospital(claimData, formData, config);
     if (result) return result;
 
     // ── Rule 2: Fraud Detection (TC008) ─────────────────────────────────
@@ -111,7 +108,7 @@ const adjudicateClaim = async (claimData, formData = {}, currentEmbedding = []) 
     }
 
     // ── Rule 3: Document Validation (TC004) ──────────────────────────────
-    result = checkDocuments(claimData);
+    result = checkDocuments(claimData, formData);
     if (result) return result;
 
     // ── Rule 4: Dental / Cosmetic (TC002) ────────────────────────────────
