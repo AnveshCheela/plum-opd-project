@@ -57,11 +57,6 @@ This project includes all requested advanced internship evaluation bonus feature
    - Continuous Integration (CI) runs on every push and pull request to verify frontend compilation (Node.js 22 + Vite) and backend setup.
    - Continuous Deployment (CD) automatically deploys the frontend to Vercel and the backend to Railway.
 
-5. **Advanced AI Techniques (Few-Shot Prompting & Embeddings RAG)**
-   - **Few-Shot Prompting**: Enhanced document parsing accuracy by introducing few-shot raw OCR-to-JSON examples in the Gemini prompt template.
-   - **Embeddings**: Uses Gemini's `text-embedding-004` model to convert claim diagnoses/procedures into 768-dimensional vector representations stored directly in MongoDB.
-   - **Semantic Similarity / RAG**: Adjudication compares new claims against the member's historical records. If a claim matches with > 90% cosine similarity on the same treatment date, it is automatically flagged as `SEMANTIC_DUPLICATE_SUSPECTED` for manual review.
-
 ---
 
 ## 🏗️ Architecture
