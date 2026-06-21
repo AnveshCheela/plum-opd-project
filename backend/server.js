@@ -57,6 +57,14 @@ app.get("/", (req, res) => {
     res.json({ status: "ok", message: "Plum OPD Backend Running 🚀" });
 });
 
+app.get("/api/real-bug", (req, res) => {
+    console.log("Simulating a real coding mistake...");
+    // This is a genuine bug: 'userProfile' does not exist!
+    // It will throw a ReferenceError in Node.js
+    const userName = userProfile.name; 
+    res.json({ message: `Welcome ${userName}` });
+});
+
 app.get("/api/test-crash", (req, res, next) => {
     console.log("Intentional backend crash triggered!");
     // Simulate a database failure or unhandled exception
