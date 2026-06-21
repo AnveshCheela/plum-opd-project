@@ -21,7 +21,7 @@ function Home() {
               className="btn btn-primary btn-lg" 
               style={{ backgroundColor: '#ef4444', borderColor: '#ef4444', marginLeft: '10px' }}
               onClick={() => {
-                throw new Error("OpsGuardian Demo: A user clicked a button that threw a fatal React error!");
+                throw new Error("This is a BRAND NEW crash to test the email escalation!");
               }}
             >
               <span>🔥</span> Test Crash
