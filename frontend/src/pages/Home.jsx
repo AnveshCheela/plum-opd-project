@@ -21,7 +21,7 @@ function Home() {
               className="btn btn-primary btn-lg" 
               style={{ backgroundColor: '#ef4444', borderColor: '#ef4444', marginLeft: '10px' }}
               onClick={() => {
-                throw new Error("This is a BRAND NEW crash to test the email escalation!");
+                throw new Error("OpsGuardian Demo Crash - Unique ID: " + Date.now());
               }}
             >
               <span>🔥</span> Test Crash
