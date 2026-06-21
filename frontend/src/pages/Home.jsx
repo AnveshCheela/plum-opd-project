@@ -16,7 +16,16 @@ function Home() {
             <Link to="/upload" className="btn btn-primary btn-lg">
               <span>🚀</span> Submit Your Claim
             </Link>
-
+            
+            <button 
+              className="btn btn-primary btn-lg" 
+              style={{ backgroundColor: '#ef4444', borderColor: '#ef4444', marginLeft: '10px' }}
+              onClick={() => {
+                throw new Error("OpsGuardian Demo: A user clicked a button that threw a fatal React error!");
+              }}
+            >
+              <span>🔥</span> Test Crash
+            </button>
           </div>
         </div>
         <div className="hero-graphic">
